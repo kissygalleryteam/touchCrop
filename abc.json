@@ -1,0 +1,14 @@
+{
+    "name": "touchCrop",
+    "version": "1.0",
+    "desc": "移动端切图组件",
+    "cover": "",
+    "tag":"",
+    "author": {
+        "name": "wb-majun",
+        "email": "wb-majun@taobao.com",
+        "page": ""
+    },
+    "type": "kissy-gallery",
+    "type-url": "http://gallery.kissyui.com/guide"
+}
