@@ -3,7 +3,7 @@
  * @author wb-majun<wb-majun@taobao.com>
  * @module touchCrop
  **/
-KISSY.add(function(S, Node, Base, Event, XTemplate){
+KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
     var $ = S.all, 
         typeFilter = ['image/jpeg', 'image/png'];
 
@@ -15,7 +15,10 @@ KISSY.add(function(S, Node, Base, Event, XTemplate){
             '</div>',
         '</div>',
         '<canvas style="display:none;"></canvas>',
-        '<input type="file">',
+        '<a class="{{cls}}-upload">',
+            '<span>{{name}}</span>',
+            '<input type="file">',
+        '</a>',
         '<button>提交</button>'
     ].join('');
 
@@ -53,9 +56,9 @@ KISSY.add(function(S, Node, Base, Event, XTemplate){
         /* 渲染切割区DOM结构 */
         _initCropArea: function(){
             var self = this, el = self.get('el');
-            var temp = new XTemplate(cropHtml, {cls:self.get('cls')});
+            var temp = new XTemplate(cropHtml);
             
-            el.html(temp.render());
+            el.html(temp.render({cls:self.get('cls'), name:'添加图片'}));
 
             /* 获取元素 */
             var touches = {
@@ -171,16 +174,28 @@ KISSY.add(function(S, Node, Base, Event, XTemplate){
                 scale = 1,              // 初始伸缩率
 
                 minScale = (function(){ // 最小伸缩率
+
                     if(touches.width < touches.height){
                         if(self.get('width') == self.get('height')){
                             return self.get('width') / touches.width / absScale;
+                        } else {
+                            if(self.get('width') > self.get('height')){
+                                return self.get('width') / touches.width / absScale;
+                            } else {
+                                return self.get('height') / touches.height / absScale;
+                            }
                         }
-                        return self.get('height') / touches.height / absScale;
+
                     } else {
                         if(self.get('width') == self.get('height')){
                             return self.get('height') / touches.height / absScale;
+                        } else {
+                            if( self.get('width') / self.get('height') <  touches.width / touches.height ){
+                                return self.get('height') / touches.height / absScale;
+                            } else {
+                                return self.get('width') / touches.width / absScale;
+                            }
                         }
-                        return self.get('width') / touches.width / absScale;
                     }
                 })(),
 
@@ -482,5 +497,3 @@ KISSY.add(function(S, Node, Base, Event, XTemplate){
 },{
     requires: ['node', 'base', 'event', 'xtemplate', 'json']
 });
-
-
