@@ -40,3 +40,6 @@ touchCrop是一款支持移动端手势的切图工具。能够实现浏览器�
 * **fileData** (Object) 文件对象name 默认'Filedata'
 * **cls** (String) 自定义样式名 默认ks-TCrop
 * **data** (Object) 自定义参数
+
+#### 事件
+* **success** 图片切割完毕上传到服务器之后返回的事件 返回值data{Object}。
