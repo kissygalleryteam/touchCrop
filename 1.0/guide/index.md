@@ -31,15 +31,18 @@ touchCrop是一款支持移动端手势的切图工具。能够实现浏览器�
 
 ## API说明
 #### 参数
-* **el**  (String) 加载控件的DOM节点
-* **width** (Number) 图像最小输出宽度
-* **height** (Numver) 图像最小输出高度
-* **frameWidth**(Numver) 预览区域宽度
-* **frameHeight** (Numver) 预览区域高度
-* **url** (String) 上传接口
-* **fileData** (Object) 文件对象name 默认'Filedata'
-* **cls** (String) 自定义样式名 默认ks-TCrop
-* **data** (Object) 自定义参数
-
+<table>
+	<tr><td>el</td><td> String</td><td>加载控件的DOM节点</td></tr>
+	<tr><td>width</td><td>Number</td><td>图像最小输出宽度</td></tr>
+	<tr><td>height</td><td>Number</td><td>图像最小输出高度</td></tr>
+	<tr><td>frameWidth</td><td>Number</td><td>预览区域宽度</td></tr>
+	<tr><td>frameHeight</td><td>Number</td><td>预览区域高度</td></tr>
+	<tr><td>url</td><td>String</td><td>上传接口</td></tr>
+	<tr><td>fileData</td><td> Object</td><td>文件对象name 默认'Filedata'</td></tr>
+	<tr><td>cls</td><td>String</td><td>自定义样式名 默认ks-TCrop</td></tr>
+	<tr><td>data</td><td>Object</td><td>自定义参</td></tr>
+</table>
 #### 事件
-* **success** 图片切割完毕上传到服务器之后返回的事件 返回值data{Object}。
+<table>
+	<tr><td>success</td><td>图片切割完毕上传到服务器之后返回的事件 返回值data{Object}。</td></tr>
+</table>
