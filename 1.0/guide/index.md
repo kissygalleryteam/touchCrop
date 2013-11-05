@@ -32,7 +32,8 @@ touchCrop是一款支持移动端手势的切图工具。能够实现浏览器�
 ## API说明
 #### 参数
 <table>
-	<tr><td>el</td><td> String</td><td>加载控件的DOM节点</td></tr>
+	<tr><th>字段</th><th>类型</th><th>说明</th></tr>
+	<tr><td>el</td><td>String</td><td>加载控件的DOM节点</td></tr>
 	<tr><td>width</td><td>Number</td><td>图像最小输出宽度</td></tr>
 	<tr><td>height</td><td>Number</td><td>图像最小输出高度</td></tr>
 	<tr><td>frameWidth</td><td>Number</td><td>预览区域宽度</td></tr>
