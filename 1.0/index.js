@@ -3,7 +3,7 @@
  * @author wb-majun<wb-majun@taobao.com>
  * @module touchCrop
  **/
- KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
+ KISSY.add(function(S, Node, Base, Event, XTemplate){
     var $ = S.all, 
         typeFilter = ['image/jpeg', 'image/png'];
 
