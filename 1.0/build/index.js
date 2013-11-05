@@ -10,7 +10,7 @@ gallery/touchCrop/1.0/index
  * @module touchCrop
  **/
  KISSY.add('gallery/touchCrop/1.0/index',function(S, Node, Base, Event, XTemplate){
-    var $ = S.all, 
+    var $ = S.all,
         typeFilter = ['image/jpeg', 'image/png'];
 
     /* DOM结构 */

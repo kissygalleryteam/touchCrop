@@ -4,7 +4,7 @@
  * @module touchCrop
  **/
  KISSY.add(function(S, Node, Base, Event, XTemplate){
-    var $ = S.all, 
+    var $ = S.all,
         typeFilter = ['image/jpeg', 'image/png'];
 
     /* DOM结构 */
