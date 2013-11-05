@@ -1,7 +1,7 @@
 {
     "name":"touchCrop",
     "version":"1.0",
-    "desc":"移动端切图组件",
+    "desc":"支持触屏手势的切图插件",
     "cover":"",
     "tag":"",
     "author":{

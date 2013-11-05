@@ -3,7 +3,7 @@
  * @author wb-majun<wb-majun@taobao.com>
  * @module touchCrop
  **/
-KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
+ KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
     var $ = S.all, 
         typeFilter = ['image/jpeg', 'image/png'];
 
@@ -94,7 +94,8 @@ KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
         _loadFile: function(file){
             var fileReader = new FileReader(), 
                 self = this, 
-                touches = self.get('touches');
+                touches = self.get('touches'),
+                hasFile = false;
 
             self.set('file', file);
 
@@ -112,8 +113,11 @@ KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
                     touches.width        = imgObj.width;
                     touches.height       = imgObj.height;
                     touches.touch[0].src = imgObj.src;
-                    self._initCrop();
+                    if(!hasFile){
+                        self._initCrop();
+                    }
                     self.set('image', imgObj);
+                    hasFile = true;
                 });
                 
             });
@@ -137,7 +141,7 @@ KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
             /* 输出大小对于边框的缩放值 
              * 若输出图片尺寸过大，则被缩放至边框大小
              */
-            var absScale = (function(){ 
+            var absScale = function(){ 
                 if(self.get('frameWidth') * self.get('frameHeight') < self.get('width') * self.get('height')){
                     if(self.get('width') > self.get('height')){
                         return self.get('frameWidth') / self.get('width');
@@ -146,12 +150,12 @@ KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
                     }
                 } 
                 return 1;
-            })();
+            }
 
             /* 同比缩放图片 */
             touches.touch.css({
                 position : 'absolute',
-                width: touches.touch.width() * absScale,
+                width: touches.touch.width() * absScale(),
             });
             
             /* 输出大于框架 */
@@ -173,31 +177,35 @@ KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
 
                 scale = 1,              // 初始伸缩率
 
-                minScale = (function(){ // 最小伸缩率
+                minScale = function(){ // 最小伸缩率
 
                     if(touches.width < touches.height){
                         if(self.get('width') == self.get('height')){
-                            return self.get('width') / touches.width / absScale;
+                            return self.get('width') / touches.width / absScale();
                         } else {
                             if(self.get('width') > self.get('height')){
-                                return self.get('width') / touches.width / absScale;
+                                return self.get('width') / touches.width / absScale();
                             } else {
-                                return self.get('height') / touches.height / absScale;
+                                if( self.get('width') / self.get('height') <  touches.width / touches.height ){
+                                    return self.get('height') / touches.height / absScale();
+                                } else {
+                                    return self.get('width') / touches.width / absScale();
+                                }
                             }
                         }
 
                     } else {
                         if(self.get('width') == self.get('height')){
-                            return self.get('height') / touches.height / absScale;
+                            return self.get('height') / touches.height / absScale();
                         } else {
                             if( self.get('width') / self.get('height') <  touches.width / touches.height ){
-                                return self.get('height') / touches.height / absScale;
+                                return self.get('height') / touches.height / absScale();
                             } else {
-                                return self.get('width') / touches.width / absScale;
+                                return self.get('width') / touches.width / absScale();
                             }
                         }
                     }
-                })(),
+                },
 
                 maxScale = 3;           // 最大伸缩率
             
@@ -215,28 +223,27 @@ KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
             touches.touch.css('-webkit-transform','scale(' + scale + ')');
 
             /* 缩放手势 */
-            touchContainer[0].addEventListener('gesturechange', function(ev){
+            
+
+            var gesturechange = function(ev){
                 ev.preventDefault();
                 touches.touch.css('-webkit-transform','scale(' + ev.scale * scale + ')');
+            }
 
-            });
-
-            touchContainer[0].addEventListener('gesturestart', function(ev){
-                
+            var gesturestart = function(ev){
                 scaleFlag = true;
                 gestureFlag = true;
 
                 touches.touch[0].style.webkitTransition = '';
-                
-            });
+            }
 
-            touchContainer[0].addEventListener('gestureend', function(ev){
+            var gestureend = function(ev){
                 ev.preventDefault();
 
                 scale = +touches.touch[0].style.webkitTransform.replace('scale\(','').replace('\)','');
 
-                if(scale < minScale){
-                    scale = minScale;
+                if(scale < minScale()){
+                    scale = minScale();
                 } 
                 if(scale > maxScale){
                     scale = maxScale;
@@ -245,18 +252,16 @@ KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
                 scaleFlag = false;
                 gestureFlag = false;
                 replaceCoords();
-            });
+            }
 
-            touchContainer[0].addEventListener('touchstart', function(ev){
+            var touchstart = function(ev){
                 dragFlag = true;
 
                 finger.x0 = ev.pageX;
                 finger.y0 = ev.pageY;
+            }
 
-            });
-
-            /* 移动手势 */
-            touchContainer[0].addEventListener('touchmove', function(ev){
+            var touchmove = function(ev){
                 ev.preventDefault();
                 var _this = this;
                 
@@ -280,16 +285,35 @@ KISSY.add('touchCrop', function(S, Node, Base, Event, XTemplate){
 
                 finger.x0 = ev.pageX;
                 finger.y0 = ev.pageY;
-            });
+            }
 
-            touchContainer[0].addEventListener('touchend', function(ev){
+            var touchend = function(ev){
                 dragFlag = false;
 
                 finger.x0 = ev.pageX;
                 finger.y0 = ev.pageY;
 
                 replaceCoords();
-            });
+            }
+
+            touchContainer[0].removeEventListener('gesturechange', gesturechange);
+            touchContainer[0].removeEventListener('gesturestart', gesturestart);
+            touchContainer[0].removeEventListener('gestureend', gestureend);
+
+            /* 移动手势 */
+            touchContainer[0].removeEventListener('touchstart', touchstart);         
+            touchContainer[0].removeEventListener('touchmove', touchmove);
+            touchContainer[0].removeEventListener('touchend', touchend);
+
+            /* 伸缩手势 */
+            touchContainer[0].addEventListener('gesturechange', gesturechange);
+            touchContainer[0].addEventListener('gesturestart', gesturestart);
+            touchContainer[0].addEventListener('gestureend', gestureend);
+
+            /* 移动手势 */
+            touchContainer[0].addEventListener('touchstart', touchstart);         
+            touchContainer[0].addEventListener('touchmove', touchmove);
+            touchContainer[0].addEventListener('touchend', touchend);
 
             /* 获取坐标
              * 若图片超出边界则缩放回默认值
