@@ -72,6 +72,11 @@
                 height:     0,  // 图像原始高
             };
             self.set('touches', touches);
+
+            touches.container.parent().css({
+                width: self.get('frameWidth'),
+                height: self.get('frameHeight')
+            });
         },
 
         /* 初始化载入照片 */
@@ -82,7 +87,7 @@
                 var file = this.files[0];
                 
                 if(typeFilter.indexOf(file.type) > -1){
-                    self._loadFile(file)
+                    self._loadFile(file);
                     return true;
                 } 
 
@@ -159,14 +164,20 @@
             });
             
             /* 输出大于框架 */
-            if(self.get('frameWidth') <= self.get('width') || self.get('frameHeight') <= self.get('height')){
-                if(self.get('width') < self.get('height')){
-                    containerCss.height = self.get('frameHeight');
-                    containerCss.width = self.get('width') * self.get('frameHeight') / self.get('height');
-                } else {
-                    containerCss.width = self.get('frameWidth');
-                    containerCss.height = self.get('height') * self.get('frameWidth') / self.get('width')
-                }
+            if(self.get('width') < self.get('height')){
+                containerCss.height = self.get('frameHeight');
+                containerCss.width = self.get('width') * self.get('frameHeight') / self.get('height');
+            } else {
+                containerCss.width = self.get('frameWidth');
+                containerCss.height = self.get('height') * self.get('frameWidth') / self.get('width')
+            }
+            
+            if(containerCss.width < self.get('frameWidth')){
+                containerCss.left = (self.get('frameWidth') - containerCss.width) / 2;
+            }
+
+            if(containerCss.height < self.get('frameWidth')){
+                containerCss.top = (self.get('frameHeight') - containerCss.height) / 2;
             }
 
             touchContainer.css(containerCss);
