@@ -28,6 +28,22 @@ touchCrop是一款支持移动端手势的切图工具。能够实现浏览器�
 			alert('图片上传成功')
 		});
     })
+    
+组件生成默认HTML节点，用户根据该结构自定义样式
+
+	<div id="J_touch" class="ks-TCrop">
+		<div class="ks-TCrop-container">
+			<div class="J_touchContainer">
+				<img>
+			</div>
+		</div>
+		<canvas style="display:none;"></canvas>
+		<a class="ks-TCrop-upload">
+			<span>添加图片</span>
+			<input type="file">
+		</a>
+		<button>提交</button>
+	</div>
 
 ## API说明
 #### 参数
