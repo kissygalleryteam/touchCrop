@@ -9,6 +9,45 @@
 <body>
 <h2>touchCrop的demo</h2>
 
+<style type="text/css">
+    .ks-TCrop{
+        position: relative;
+    }
+    .ks-TCrop .ks-TCrop-container{
+        width: 500px;
+        height: 500px;
+        border: 1px solid #eee;
+    }
+    .ks-TCrop .ks-TCrop-upload{
+        position: absolute;
+        display: inline-block;
+        width: 4em;
+        height: 1em;
+        padding: 10px 20px;
+        background-color: #000;
+        overflow: hidden;
+        top: 232px;
+        left: 198px;
+        
+    }
+    .ks-TCrop .ks-TCrop-upload span{
+        color: #fff;
+    }
+    .ks-TCrop .ks-TCrop-upload input{
+        position: absolute;
+        font-size: 999px;
+        left: 0;
+        top: 0;
+        opacity: 0;
+    }
+    .ks-TCrop button{
+        margin-top: 10px;
+    }
+
+</style>
+    <div id="J_touch"></div>
+</body>
+</html>
 <script>
     var S = KISSY;
     if (S.Config.debug) {
@@ -26,8 +65,21 @@
     }
 
     S.use('gallery/touchCrop/1.0/index', function (S, TouchCrop) {
-          new TouchCrop();
+        var touchCrop = new TouchCrop({
+            el: '#J_touch',             // 加载控件的节点
+            width: 440,                 // 图像最小输出宽度
+            height: 400,                // 图像最小输出高度
+            frameWidth: 500,            // 预览区域宽度
+            frameHeight: 500,           // 预览区域高度
+            url: 'upload.do',           // 上传接口
+            fileData: 'Filedata',       // 文件对象name 默认'Filedata'
+            cls: 'ks-TCrop',            // 自定义样式名 默认ks-TCrop
+            data: {}                    // 自定义参数
+        });
+
+        // 监听提交图片后的事件
+        touchCrop.on('success', function(ev){
+            alert('图片上传成功')
+        });
     })
 </script>
-</body>
-</html>
