@@ -15,7 +15,7 @@
             '</div>',
         '</div>',
         '<canvas style="display:none;"></canvas>',
-        '<a class="{{cls}}-upload">',
+        '<a class="{{cls}}-upload J_touchUploader">',
             '<span>{{name}}</span>',
             '<input type="file">',
         '</a>',
@@ -68,6 +68,7 @@
                 file:       el.all('input'),
                 submit:     el.all('button'),
                 context:    el.all('canvas')[0].getContext('2d'),
+                upload:     el.all('.J_touchUploader'),
                 width:      0,  // 图像原始宽
                 height:     0,  // 图像原始高
             };
@@ -147,13 +148,13 @@
              * 若输出图片尺寸过大，则被缩放至边框大小
              */
             var absScale = function(){ 
-                if(self.get('frameWidth') * self.get('frameHeight') < self.get('width') * self.get('height')){
+                //if(self.get('frameWidth') * self.get('frameHeight') < self.get('width') * self.get('height')){
                     if(self.get('width') > self.get('height')){
                         return self.get('frameWidth') / self.get('width');
                     } else {
                         return self.get('frameHeight') / self.get('height');
                     }
-                } 
+                //} 
                 return 1;
             }
 
@@ -163,13 +164,13 @@
                 width: touches.touch.width() * absScale(),
             });
             
-            /* 输出大于框架 */
+            
             if(self.get('width') < self.get('height')){
                 containerCss.height = self.get('frameHeight');
                 containerCss.width = self.get('width') * self.get('frameHeight') / self.get('height');
             } else {
                 containerCss.width = self.get('frameWidth');
-                containerCss.height = self.get('height') * self.get('frameWidth') / self.get('width')
+                containerCss.height = self.get('height') * self.get('frameWidth') / self.get('width');
             }
             
             if(containerCss.width < self.get('frameWidth')){
@@ -189,32 +190,16 @@
                 scale = 1,              // 初始伸缩率
 
                 minScale = function(){ // 最小伸缩率
-
-                    if(touches.width < touches.height){
-                        if(self.get('width') == self.get('height')){
-                            return self.get('width') / touches.width / absScale();
-                        } else {
-                            if(self.get('width') > self.get('height')){
-                                return self.get('width') / touches.width / absScale();
-                            } else {
-                                if( self.get('width') / self.get('height') <  touches.width / touches.height ){
-                                    return self.get('height') / touches.height / absScale();
-                                } else {
-                                    return self.get('width') / touches.width / absScale();
-                                }
-                            }
+                    if( self.get('width') / self.get('height') <=  touches.width / touches.height ){
+                        if(self.get('height') < self.get('frameHeight')){
+                            return self.get('frameHeight') / touches.height / absScale();    
                         }
-
+                        return self.get('height') / touches.height / absScale();
                     } else {
-                        if(self.get('width') == self.get('height')){
-                            return self.get('height') / touches.height / absScale();
-                        } else {
-                            if( self.get('width') / self.get('height') <  touches.width / touches.height ){
-                                return self.get('height') / touches.height / absScale();
-                            } else {
-                                return self.get('width') / touches.width / absScale();
-                            }
+                        if(self.get('height') < self.get('frameHeight')){
+                            return self.get('frameWidth') / touches.width / absScale();    
                         }
+                        return self.get('width') / touches.width / absScale();
                     }
                 },
 
@@ -383,6 +368,8 @@
                 }, 300);
             }
             replaceCoords();
+
+            touches.upload.hide();
         },
 
         /* 获取坐标 */

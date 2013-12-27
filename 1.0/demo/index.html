@@ -16,7 +16,7 @@
     .ks-TCrop .ks-TCrop-container{
         width: 500px;
         height: 500px;
-        border: 1px solid #eee;
+        border: 1px solid #eee;        
     }
     .ks-TCrop .ks-TCrop-upload{
         position: absolute;
@@ -27,8 +27,7 @@
         background-color: #000;
         overflow: hidden;
         top: 232px;
-        left: 198px;
-        z-index: 99;
+        left: 198px;        
         
     }
     .ks-TCrop .ks-TCrop-upload span{
@@ -47,6 +46,7 @@
 
 </style>
     <div id="J_touch"></div>
+    <p>DEMO目前无上传，请自行下载到本地并调用自己的文件上传接口。</p>
 </body>
 </html>
 <script>
@@ -68,8 +68,8 @@
     S.use('gallery/touchCrop/1.0/index', function (S, TouchCrop) {
         var touchCrop = new TouchCrop({
             el: '#J_touch',             // 加载控件的节点
-            width: 440,                 // 图像最小输出宽度
-            height: 400,                // 图像最小输出高度
+            width: 100,                 // 图像最小输出宽度
+            height: 100,                // 图像最小输出高度
             frameWidth: 500,            // 预览区域宽度
             frameHeight: 500,           // 预览区域高度
             url: 'upload.do',           // 上传接口
