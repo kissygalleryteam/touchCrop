@@ -389,14 +389,14 @@
                 touchObj = touches.touch;
             var scale = +touchObj[0].style.webkitTransform.replace('scale\(','').replace('\)',''),
                 absScale = (function(){ // 绝对缩放值
-                    if(self.get('frameWidth') * self.get('frameHeight') < self.get('width') * self.get('height')){
+                    //if(self.get('frameWidth') * self.get('frameHeight') < self.get('width') * self.get('height')){
                         if(self.get('width') > self.get('height')){
                             return self.get('frameWidth') / self.get('width');
                         } else {
                             return self.get('frameHeight') / self.get('height');
                         }
-                    } 
-                    return 1;
+                    //} 
+                    //return 1;
                 })();
             
             var coords = {
@@ -443,7 +443,7 @@
 
             // 获取元素
             var imgData = touches.context.getImageData(-coords.x, -coords.y, self.get('width') , self.get('height'));
-
+            alert([-coords.x, -coords.y, self.get('width') , self.get('height')].join(','));
             // 清空画布
             
             touches.canvas.width = self.get('width');

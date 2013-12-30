@@ -1,15 +1,14 @@
 {
-    "name":"touchCrop",
-    "version":"1.0",
-    "desc":"支持触屏手势的切图插件",
-    "cover":"",
+    "name": "touchCrop",
+    "version": "1.0",
+    "desc": "",
+    "cover": "",
     "tag":"",
-    "author":{
-    "name":"wb-majun",
-    "email":"wb-majun@taobao.com",
-    "page":""
-},
-    "type":"kissy-gallery",
-    "type-url":"http://gallery.kissyui.com/guide",
-    "githubName":"macroth@gmail.com"
+    "author": {
+        "name": "wb-majun",
+        "email": "wb-majun@taobao.com",
+        "page": ""
+    },
+    "type": "kissy-gallery",
+    "type-url": "http://gallery.kissyui.com/guide"
 }
