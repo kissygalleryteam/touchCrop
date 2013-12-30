@@ -1,0 +1,2 @@
+/*!build time : 2013-12-30 5:24:26 PM*/
+KISSY.add("gallery/touchCrop/1.0.1/index",function(a,b,c){function d(a){var b=this;d.superclass.constructor.call(b,a)}return b.all,a.extend(d,c,{},{ATTRS:{}}),d},{requires:["node","base"]});
