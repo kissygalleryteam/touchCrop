@@ -8,6 +8,14 @@ touchCrop是一款支持移动端手势的切图工具。能够实现浏览器�
 * 标签：
 * demo：[http://gallery.kissyui.com/touchCrop/1.0/demo/index.html](http://gallery.kissyui.com/touchCrop/1.0/demo/index.html)
 
+## changelog
+
+### V1.0
+
+    [1] 2013-12-25 修复图片加载后不居中显示的BUG
+    [2] 2013-12-26 修复输入尺寸小于框尺寸图像无法等比放大的BUG
+
+
 ## 初始化组件
 
     S.use('gallery/touchCrop/1.0/index', function (S, TouchCrop) {
