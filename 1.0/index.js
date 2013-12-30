@@ -129,6 +129,16 @@
             });
         },
 
+        /* 获取绝对伸缩率 */
+        getAbsScale: function(){
+            var self = this;
+            if(self.get('width') > self.get('height')){
+                return self.get('frameWidth') / self.get('width');
+            } else {
+                return self.get('frameHeight') / self.get('height');
+            }
+        },
+
         /* 加载切割区域，并监听拖放手势等 */
         _initCrop: function(){
             var self = this, 
@@ -149,13 +159,12 @@
              */
             var absScale = function(){ 
                 //if(self.get('frameWidth') * self.get('frameHeight') < self.get('width') * self.get('height')){
-                    if(self.get('width') > self.get('height')){
-                        return self.get('frameWidth') / self.get('width');
-                    } else {
-                        return self.get('frameHeight') / self.get('height');
-                    }
-                //} 
-                return 1;
+                if(self.get('width') > self.get('height')){
+                    return self.get('frameWidth') / self.get('width');
+                } else {
+                    return self.get('frameHeight') / self.get('height');
+                }
+          
             }
 
             /* 同比缩放图片 */
@@ -430,16 +439,15 @@
             touches.canvas.height = touches.height;
 
             // 插入画布
-            touches.context.drawImage(self.get('image'), 0, 0);
+            touches.context.drawImage(self.get('image'), 0, 0, touches.canvas.width, touches.canvas.height);
 
-            
             // 获取元素
-            var imgData = touches.context.getImageData(-coords.x, -coords.y, coords.width, coords.height);
+            var imgData = touches.context.getImageData(-coords.x, -coords.y, self.get('width') , self.get('height'));
 
             // 清空画布
             
-            touches.canvas.width = coords.width;
-            touches.canvas.height = coords.height;
+            touches.canvas.width = self.get('width');
+            touches.canvas.height = self.get('height');
             
             touches.context.putImageData(imgData, 0, 0);
 
