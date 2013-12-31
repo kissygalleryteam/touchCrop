@@ -421,7 +421,8 @@ gallery/touchCrop/1.0.1/index
                 x:      (coords.ax - coords.bx ) / coords.r / absScale,
                 y:      (coords.ay - coords.by ) / coords.r / absScale,
                 width:  coords.dx / coords.r / absScale,
-                height: coords.dy / coords.r / absScale
+                height: coords.dy / coords.r / absScale,
+                scale: scale
             };  
         },
 
@@ -445,15 +446,16 @@ gallery/touchCrop/1.0.1/index
             touches.canvas.height = touches.height;
 
             // 插入画布
-            touches.context.drawImage(self.get('image'), 0, 0, touches.canvas.width, touches.canvas.height);
-
+            var _objImage = self.get('image');
+            touches.context.drawImage(self.get('image'), 0, 0);
+           
             // 获取元素
-            var imgData = touches.context.getImageData(-coords.x, -coords.y, self.get('width') , self.get('height'));
+            var imgData = touches.context.getImageData(-coords.x, -coords.y, coords.width, coords.height);
             
             // 清空画布
             
-            touches.canvas.width = self.get('width');
-            touches.canvas.height = self.get('height');
+            touches.canvas.width =  coords.width;
+            touches.canvas.height = coords.height;
             
             touches.context.putImageData(imgData, 0, 0);
 
